@@ -33,7 +33,9 @@ export default defineConfig({
     ['json', { outputFile: 'test-results/results.json' }],
     ['junit', { outputFile: 'test-results/junit.xml' }],
     ['list'],
-    ['allure-playwright'],
+    ['allure-playwright', {
+      outputFolder: process.env.ALLURE_RESULTS || 'allure-results'
+    }],
   ],
   globalSetup: "./src/utils/global-setup.ts",
   use: {
@@ -53,7 +55,7 @@ export default defineConfig({
         ignoreHTTPSErrors: true,
         testIdAttribute: 'data-test',
         headless: !!process.env.CI
-      },
+      }
     },
     {
         name: "fakeStoreAPI",
