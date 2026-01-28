@@ -1,4 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+echo "running pre commit hook, linting basically"
+
 npx lint-staged
+
+echo "linting finished, please check for any errors or warnings"
