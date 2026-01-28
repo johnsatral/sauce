@@ -15,4 +15,3 @@ playwright/.cache/
 coverage/
 .husky/_
 playwright-report
-package-lock.json
