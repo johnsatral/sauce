@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "running lint on the staged files..."
+
+npx lint-staged
+
+echo "linting completed. Please review any warnings or errors above."

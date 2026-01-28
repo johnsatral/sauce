@@ -1,0 +1,47 @@
+{
+  "name": "playwright-automation",
+  "version": "1.0.0",
+  "description": "Professional Playwright TypeScript automation testing framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:sauceDemo": "playwright test --project=sauceDemo",
+    "codegen": "playwright codegen",
+    "allure:report": "allure generate ./allure-results -o ./allure-report --clean",
+    "allure:open": "allure open ./allure-report",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "clean": "rm -rf test-results && rm -rf blob-report && rm -rf playwright/.cache",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "automation",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^22.7.0",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "allure-playwright": "^3.0.4",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.12.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}
