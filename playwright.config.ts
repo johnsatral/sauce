@@ -47,7 +47,7 @@ export default defineConfig({
   projects: [
     {
       name: "sauceDemo",
-      testMatch: "**/specs/sauceDemo.spec.ts",
+      testMatch: "**/specs/ui/sauceDemo.spec.ts",
       fullyParallel: true,
       use: { 
         ...devices['Desktop Chrome'],
@@ -56,14 +56,16 @@ export default defineConfig({
         headless: false
       },
     },
-
-   
+    {
+        name: "fakeStoreAPI",
+        testMatch: "**/specs/api/fakestore.spec.ts",
+        use: {
+            ignoreHTTPSErrors: true,
+            httpCredentials: {
+                username: process.env.API_USERNAME || '',
+                password: process.env.API_PASSWORD || ''
+            }
+        }
+    }
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run dev',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });

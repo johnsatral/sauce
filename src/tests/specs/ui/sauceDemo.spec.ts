@@ -1,6 +1,6 @@
 import { expect} from '@playwright/test';
-import { test } from '../fixtures/sauceDemo.fx.ts';
-import { username, password, firstName, lastName, postalCode, baseURL  } from "../../utils/localVariables.ts";
+import { test } from '../../fixtures/sauceDemo.fx.ts';
+import { username, password, firstName, lastName, postalCode, baseURL  } from "../../../utils/localVariables.ts";
 
 
 test.describe('SauceDemo basic tests', () => {
