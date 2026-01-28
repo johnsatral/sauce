@@ -7,6 +7,7 @@ on:
     branches: [main, develop]
 
 jobs:
+
   saucedemo-tests:
     name: SauceDemo UI Tests
     runs-on: ubuntu-latest
@@ -30,7 +31,9 @@ jobs:
       - name: Run SauceDemo Tests
         run: |
           mkdir -p allure-results/sauceDemo blob-report/sauceDemo
-          ALLURE_RESULTS=allure-results/sauceDemo BLOB_REPORT=blob-report/sauceDemo npx playwright test --project=sauceDemo
+          ALLURE_RESULTS=allure-results/sauceDemo \
+          npx playwright test --project=sauceDemo \
+          --reporter=blob --reporter-options=outputFolder=blob-report/sauceDemo
         env:
           CI: true
           BASE_URL: ${{ secrets.BASE_URL }}
@@ -65,7 +68,9 @@ jobs:
       - name: Run FakeStore Tests
         run: |
           mkdir -p allure-results/fakeStoreAPI blob-report/fakeStoreAPI
-          ALLURE_RESULTS=allure-results/fakeStoreAPI BLOB_REPORT=blob-report/fakeStoreAPI npx playwright test --project=fakeStoreAPI
+          ALLURE_RESULTS=allure-results/fakeStoreAPI \
+          npx playwright test --project=fakeStoreAPI \
+          --reporter=blob --reporter-options=outputFolder=blob-report/fakeStoreAPI
         env:
           CI: true
           API_USERNAME: ${{ secrets.API_USERNAME }}
@@ -107,6 +112,7 @@ jobs:
           cp -r blob-report/sauceDemo/* all-blob-reports/
           cp -r blob-report/fakeStoreAPI/* all-blob-reports/
           npx playwright merge-reports --reporter html ./all-blob-reports
+
 
       - name: Merge Allure Results
         run: |
