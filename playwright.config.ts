@@ -36,7 +36,7 @@ export default defineConfig({
     ['allure-playwright', {
       outputFolder: process.env.ALLURE_RESULTS || 'allure-results'
     }],
-    ['blob'] 
+    ['blob', { outputFolder: process.env.BLOB_REPORT || 'blob-report' }]
   ],
   globalSetup: "./src/utils/global-setup.ts",
   use: {
