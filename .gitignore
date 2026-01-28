@@ -14,7 +14,5 @@ playwright/.cache/
 *.swo
 coverage/
 .husky/_
-.env
-.env.test
 playwright-report
 package-lock.json
