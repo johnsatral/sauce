@@ -15,7 +15,7 @@
     "lint": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "clean": "rm -rf test-results && rm -rf blob-report && rm -rf playwright/.cache",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "keywords": [
     "playwright",
