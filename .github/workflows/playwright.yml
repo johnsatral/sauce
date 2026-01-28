@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: SauceDemo and FakeStore Playwright Tests
 
 on:
   push:
@@ -7,62 +7,11 @@ on:
     branches: [main, develop]
 
 jobs:
-  test:
+  saucedemo-tests:
+    name: SauceDemo UI Tests
+    runs-on: ubuntu-latest
     timeout-minutes: 60
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-        browser: [chromium, firefox, webkit]
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint TypeScript files
-        run: npm run lint
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps ${{ matrix.browser }}
-
-      - name: Run tests on ${{ matrix.browser }}
-        run: npm test -- --project=${{ matrix.browser }}
-        env:
-          CI: true
-          BASE_URL: ${{ secrets.BASE_URL || 'http://localhost:3000' }}
-
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-${{ matrix.node-version }}-${{ matrix.browser }}
-          path: |
-            test-results/
-            blob-report/
-            allure-results/
-          retention-days: 30
-
-      - name: Upload HTML report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: html-report-${{ matrix.node-version }}-${{ matrix.browser }}
-          path: playwright-report/
-          retention-days: 14
-
-  merge-reports:
-    if: always()
-    needs: test
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -70,48 +19,125 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 20.x
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Download all blob reports
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run SauceDemo UI Tests
+        run: npx playwright test --project=sauceDemo
+        env:
+          CI: true
+
+      - name: Upload SauceDemo Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: saucedemo-reports
+          path: |
+            blob-report/
+            allure-results/
+            test-results/
+
+  fakestore-tests:
+    name: FakeStore API Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run FakeStore API Tests
+        run: npx playwright test --project=fakeStoreAPI
+        env:
+          CI: true
+
+      - name: Upload FakeStore Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fakestore-reports
+          path: |
+            blob-report/
+            allure-results/
+            test-results/
+
+  merge-reports:
+    name: Merge All Reports
+    needs:
+      - saucedemo-tests
+      - fakestore-tests
+
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download SauceDemo Reports
         uses: actions/download-artifact@v4
         with:
-          path: all-blob-reports
-          pattern: blob-report-*
+          name: saucedemo-reports
+          path: reports/saucedemo
 
-      - name: Merge reports
-        run: npx playwright merge-reports --reporter html ./all-blob-reports
-
-      - name: Download all allure results
+      - name: Download FakeStore Reports
         uses: actions/download-artifact@v4
         with:
-          path: all-allure-results
-          pattern: playwright-report-*
+          name: fakestore-reports
+          path: reports/fakestore
 
-      - name: Merge allure results
+      - name: Merge Playwright Reports
+        run: |
+          mkdir -p all-blob-reports
+          find reports -type d -name "blob-report" -exec cp -r {}/* all-blob-reports/ \;
+          npx playwright merge-reports --reporter html ./all-blob-reports
+
+      - name: Merge Allure Results
         run: |
           mkdir -p ./allure-results
-          find ./all-allure-results -name "allure-results" -type d -exec cp -r {}/* ./allure-results/ \;
+          find reports -type d -name "allure-results" -exec cp -r {}/* ./allure-results/ \;
+
 
       - name: Install Allure
         run: npm install -g allure-commandline
 
       - name: Generate Allure Report
-        if: always()
         run: allure generate ./allure-results -o ./allure-report --clean
 
-      - name: Upload HTML report
+      - name: Upload Playwright HTML Report
         uses: actions/upload-artifact@v4
         with:
-          name: html-report-final
+          name: playwright-report-final
           path: playwright-report/
           retention-days: 14
 
-      - name: Upload Allure report
-        if: always()
+      - name: Upload Allure Report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-final
