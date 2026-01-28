@@ -52,4 +52,39 @@ test.describe('SauceDemo basic tests', () => {
 
     });
 
+    test("test sorting functionality on inventory page", async ({
+        page,
+        loginPage,
+        inventoryPage
+    }) => {
+
+        await page.goto(baseURL);
+        await loginPage.waitForLoginPage();
+
+        await Promise.all([
+            loginPage.login(username, password),
+            inventoryPage.waitForInventoryPage()
+        ]);
+
+        const ascSortedItems = await inventoryPage.getAllItemsListinAscOrderAndSortInDesc();
+        const descSortedItems = await inventoryPage.getAllItemsInDescOrder();
+        console.log("Ascending Sorted Items: ", ascSortedItems);
+        console.log("Descending Sorted Items: ", descSortedItems);
+
+        expect(ascSortedItems).toEqual(descSortedItems);
+
+    });
+
+    test("invalid login test", async ({
+        page,
+        loginPage
+    }) => {
+        await page.goto(baseURL);
+        await loginPage.waitForLoginPage(); 
+        await loginPage.login("invalid", "invalid");
+
+        await expect(loginPage.errorMessage).toBeVisible();
+        await expect(loginPage.errorMessage).toHaveText("Epic sadface: Username and password do not match any user in this service");
+    });
+
 });
