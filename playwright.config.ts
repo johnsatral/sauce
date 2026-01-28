@@ -38,7 +38,6 @@ export default defineConfig({
   globalSetup: "./src/utils/global-setup.ts",
   use: {
     baseURL: process.env.BASE_URL || 'https://www.saucedemo.com/',
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -53,7 +52,7 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         ignoreHTTPSErrors: true,
         testIdAttribute: 'data-test',
-        headless: false
+        headless: !!process.env.CI
       },
     },
     {
