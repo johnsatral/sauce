@@ -1,4 +1,4 @@
-name: Playwright Tests CI
+name: Playwright CI
 
 on:
   push:
@@ -13,13 +13,13 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20.x
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -29,20 +29,21 @@ jobs:
 
       - name: Run SauceDemo Tests
         run: |
-          mkdir -p allure-results/sauceDemo
-          ALLURE_RESULTS=allure-results/sauceDemo npx playwright test --project=sauceDemo
+          mkdir -p allure-results/sauceDemo blob-report/sauceDemo
+          ALLURE_RESULTS=allure-results/sauceDemo BLOB_REPORT=blob-report/sauceDemo npx playwright test --project=sauceDemo
         env:
           CI: true
+          BASE_URL: ${{ secrets.BASE_URL }}
 
-      - name: Upload SauceDemo Reports
+      - name: Upload SauceDemo Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sauceDemo-reports
           path: |
             allure-results/sauceDemo
+            blob-report/sauceDemo
             test-results/
-            blob-report/
 
   fakestore-tests:
     name: FakeStore API Tests
@@ -50,35 +51,35 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20.x
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run FakeStore API Tests
+      - name: Run FakeStore Tests
         run: |
-          mkdir -p allure-results/fakeStoreAPI
-          ALLURE_RESULTS=allure-results/fakeStoreAPI npx playwright test --project=fakeStoreAPI
+          mkdir -p allure-results/fakeStoreAPI blob-report/fakeStoreAPI
+          ALLURE_RESULTS=allure-results/fakeStoreAPI BLOB_REPORT=blob-report/fakeStoreAPI npx playwright test --project=fakeStoreAPI
         env:
           CI: true
           API_USERNAME: ${{ secrets.API_USERNAME }}
           API_PASSWORD: ${{ secrets.API_PASSWORD }}
 
-      - name: Upload FakeStore Reports
+      - name: Upload FakeStore Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: fakestore-reports
           path: |
             allure-results/fakeStoreAPI
+            blob-report/fakeStoreAPI
             test-results/
-            blob-report/
 
   merge-reports:
     name: Merge Playwright + Allure Reports
@@ -89,13 +90,13 @@ jobs:
     if: always()
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20.x
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -103,13 +104,13 @@ jobs:
       - name: Merge Blob Reports
         run: |
           mkdir -p all-blob-reports
-          cp -r allure-results/sauceDemo/* all-blob-reports/
-          cp -r allure-results/fakeStoreAPI/* all-blob-reports/
+          cp -r blob-report/sauceDemo/* all-blob-reports/
+          cp -r blob-report/fakeStoreAPI/* all-blob-reports/
           npx playwright merge-reports --reporter html ./all-blob-reports
 
       - name: Merge Allure Results
         run: |
-          mkdir -p ./allure-results
+          mkdir -p allure-results
           cp -r allure-results/sauceDemo/* ./allure-results/
           cp -r allure-results/fakeStoreAPI/* ./allure-results/
 
@@ -119,7 +120,7 @@ jobs:
       - name: Generate Allure Report
         run: allure generate ./allure-results -o ./allure-report --clean
 
-      - name: Upload Final Playwright HTML Report
+      - name: Upload Final HTML Report
         uses: actions/upload-artifact@v4
         with:
           name: playwright-html-report
