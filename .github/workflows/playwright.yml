@@ -57,7 +57,9 @@ jobs:
       - name: Run FakeStore API tests
         run: |
           mkdir -p allure-results/fakeStoreAPI
-          ALLURE_RESULTS=allure-results/fakeStoreAPI npx playwright test --project=fakeStoreAPI
+          DEBUG=pw:api,pw:request,pw:response \
+          ALLURE_RESULTS=allure-results/fakeStoreAPI \
+          npx playwright test --project=fakeStoreAPI --reporter=line
         env:
           CI: true
           API_BASE_URL: http://localhost:3000
@@ -67,7 +69,13 @@ jobs:
         with:
           name: fakestore-allure
           path: allure-results/fakeStoreAPI
-
+      - name : Upload playwright traces    
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fakestore-playwright-traces
+          path: test-results
+          
   merge-allure-report:
     runs-on: ubuntu-latest
     needs: [sauce-demo-tests, fakestore-tests]
