@@ -43,7 +43,7 @@ jobs:
           path: allure-report/sauceDemo
 
   fakestoreapi-tests:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, fakestore]
 
     steps:
       - uses: actions/checkout@v4
