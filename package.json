@@ -11,7 +11,7 @@
     "test:sauceDemo": "playwright test --project=sauceDemo",
     "codegen": "playwright codegen",
     "allure:report": "allure generate ./allure-results -o ./allure-report --clean",
-    "allure:open": "allure open ./allure-report",
+    "allure:open": "allure open ./allure-results",
     "lint": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "clean": "rm -rf test-results && rm -rf blob-report && rm -rf playwright/.cache",
