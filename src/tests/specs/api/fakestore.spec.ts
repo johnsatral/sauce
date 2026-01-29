@@ -1,9 +1,33 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, request, APIRequestContext } from '@playwright/test';
 import { apiBaseURL, apiUsername, apiPassword } from '../../../utils/localVariables.ts';
 
+let apiContext: APIRequestContext;
+
+test.beforeAll(async () => {
+  apiContext = await request.newContext({
+    extraHTTPHeaders: {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      Accept: 'application/json, text/plain, */*',
+      'Accept-Language': 'en-US,en;q=0.9',
+      Referer: 'https://fakestoreapi.com/',
+      Connection: 'keep-alive',
+      'Cache-Control': 'no-cache',
+      Pragma: 'no-cache',
+      'Sec-Fetch-Dest': 'empty',
+      'Sec-Fetch-Mode': 'cors',
+      'Sec-Fetch-Site': 'same-origin',
+    },
+  });
+});
+
+test.afterAll(async () => {
+  await apiContext.dispose();
+});
+
 test.describe('FakeStore API tests', () => {
-  test('successful login test for fakestore api, using existing users', async ({ request }) => {
-    const response = await request.post(`${apiBaseURL}/auth/login`, {
+  test('successful login test for fakestore api, using existing users', async () => {
+    const response = await apiContext.post(`${apiBaseURL}/auth/login`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -18,22 +42,18 @@ test.describe('FakeStore API tests', () => {
     expect(responseBody).toHaveProperty('token');
   });
 
-  test('get users to do the login tests', async ({ request }) => {
-    const newUser = await request.get(`${apiBaseURL}/users`, {
-      data: {
-        Origin: apiBaseURL,
-      },
-    });
+  test('get users to do the login tests', async () => {
+    const newUser = await apiContext.get(`${apiBaseURL}/users`);
     expect(newUser.status()).toBe(200);
   });
 
-  test('get products to do the test with  products', async ({ request }) => {
-    const prods = await request.get(`${apiBaseURL}/products`, {});
+  test('get products to do the test with  products', async () => {
+    const prods = await apiContext.get(`${apiBaseURL}/products`);
     expect(prods.status()).toBe(200);
   });
 
-  test('get product and validate its content', async ({ request }) => {
-    const newUser = await request.get(`${apiBaseURL}/products/5`, {});
+  test('get product and validate its content', async () => {
+    const newUser = await apiContext.get(`${apiBaseURL}/products/5`);
     expect(newUser.status()).toBe(200);
     const newUserResponse = await newUser.json();
     expect(newUserResponse).toHaveProperty('id', 5);
