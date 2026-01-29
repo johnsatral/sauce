@@ -19,10 +19,9 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: |
           mkdir -p allure-results/sauceDemo
-          ALLURE_RESULTS=allure-results/sauceDemo npx playwright test --project=sauceDemo || true
+          ALLURE_RESULTS=allure-results/sauceDemo npx playwright test --project=sauceDemo
         env:
           CI: true
-          BASE_URL: ${{ secrets.BASE_URL }}
       - uses: actions/upload-artifact@v4
         with:
           name: sauceDemo-allure
@@ -40,11 +39,9 @@ jobs:
       - run: npm ci
       - run: |
           mkdir -p allure-results/fakeStoreAPI
-          ALLURE_RESULTS=allure-results/fakeStoreAPI npx playwright test --project=fakeStoreAPI || true
+          ALLURE_RESULTS=allure-results/fakeStoreAPI npx playwright test --project=fakeStoreAPI
         env:
           CI: true
-          API_USERNAME: ${{ secrets.API_USERNAME }}
-          API_PASSWORD: ${{ secrets.API_PASSWORD }}
       - uses: actions/upload-artifact@v4
         with:
           name: fakestore-allure
