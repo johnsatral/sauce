@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { apiBaseURL, apiUsername, apiPassword } from '../../../utils/localVariables.ts';
 
-// Mock API responses for browser-based requests
+// mocking stuff because getting 403 from fakestoreapi.com probably due to cloudflare restrictions
 const mockLoginResponse = { token: 'fake-token' };
 const mockUsersResponse = [
   { id: 1, username: 'user1' },

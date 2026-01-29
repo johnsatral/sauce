@@ -35,6 +35,12 @@ jobs:
           name: saucedemo-allure-results
           path: allure-results/sauceDemo
 
+      - name: upload saucedemo playwright report
+        uses: actions/upload-artifact@v4
+        with:
+          name: saucedemo-playwright-report
+          path: playwright-report
+
   fakestoreapi-tests:
     runs-on: ubuntu-latest
 
@@ -63,17 +69,47 @@ jobs:
           name: fakestoreapi-allure-results
           path: allure-results/fakeStoreAPI
 
+      - name: upload fakestoreapi playwright report
+        uses: actions/upload-artifact@v4
+        with:
+          name: fakestoreapi-playwright-report
+          path: playwright-report
+
   generate-allure-report:
     runs-on: ubuntu-latest
     needs: [saucedemo-tests, fakestoreapi-tests]
     steps:
       - uses: actions/checkout@v4
 
+
       - name: Download saucedemo allure results
         uses: actions/download-artifact@v4
         with:
           name: saucedemo-allure-results
           path: allure-results/sauceDemo
+  upload-playwright-report:
+    runs-on: ubuntu-latest
+    needs: [saucedemo-tests, fakestoreapi-tests]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download saucedemo playwright report
+        uses: actions/download-artifact@v4
+        with:
+          name: saucedemo-playwright-report
+          path: playwright-report/saucedemo
+
+      - name: Download fakestoreapi playwright report
+        uses: actions/download-artifact@v4
+        with:
+          name: fakestoreapi-playwright-report
+          path: playwright-report/fakestoreapi
+
+      - name: Upload combined playwright report
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-playwright-report
+          path: playwright-report
 
       - name: Download fakestoreapi allure results
         uses: actions/download-artifact@v4
