@@ -128,22 +128,3 @@ jobs:
         with:
           name: combined-playwright-report
           path: playwright-report
-
-      - name: Download fakestoreapi allure results
-        uses: actions/download-artifact@v4
-        with:
-          name: fakestoreapi-allure-results
-          path: allure-results/fakeStoreAPI
-
-      - name: Install Allure CLI
-        run: npm install -g allure-commandline
-
-      - name: Generate combined Allure report
-        run: |
-          npx allure generate allure-results/sauceDemo allure-results/fakeStoreAPI -o allure-report --clean
-
-      - name: Upload combined Allure report
-        uses: actions/upload-artifact@v4
-        with:
-          name: combined-allure-report
-          path: allure-report
