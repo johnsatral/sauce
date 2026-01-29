@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { apiBaseURL, apiUsername, apiPassword } from '../../../utils/localVariables.ts';
+import nock from 'nock';
 
-// Mocking api responses because unfortunately cloudfare seems to be blocking requests from playwright.
+// Mocking api responses using nock
 const mockLoginResponse = { token: 'fake-token' };
 const mockUsersResponse = [
   { id: 1, username: 'user1' },
@@ -25,57 +26,30 @@ const mockProduct5Response = {
 };
 const mockCartResponse = { id: 1, userId: 5, products: [{ id: 5 }] };
 
-test.beforeEach(async ({ page }) => {
-  await page.route(`${apiBaseURL}/auth/login`, (route) => {
-    if (route.request().postData()?.includes('invalid')) {
-      route.fulfill({ status: 401, contentType: 'application/json', body: '{}' });
-    } else {
-      route.fulfill({
-        status: 201,
-        contentType: 'application/json',
-        body: JSON.stringify(mockLoginResponse),
-      });
-    }
-  });
-  await page.route(`${apiBaseURL}/users`, (route) => {
-    route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify(mockUsersResponse),
-    });
-  });
-  await page.route(`${apiBaseURL}/products`, (route) => {
-    if (route.request().method() === 'PUT') {
-      route.fulfill({ status: 404, contentType: 'application/json', body: '{}' });
-    } else {
-      route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify(mockProductsResponse),
-      });
-    }
-  });
-  await page.route(`${apiBaseURL}/products/5`, (route) => {
-    route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify(mockProduct5Response),
-    });
-  });
-  await page.route(`${apiBaseURL}/carts`, (route) => {
-    route.fulfill({
-      status: 201,
-      contentType: 'application/json',
-      body: JSON.stringify(mockCartResponse),
-    });
-  });
-  await page.route(`${apiBaseURL}/users/5`, (route) => {
-    if (route.request().method() === 'DELETE') {
-      route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
-    } else {
-      route.continue();
-    }
-  });
+test.beforeEach(() => {
+  nock.cleanAll();
+  nock.disableNetConnect();
+  // Login
+  nock(apiBaseURL)
+    .post('/auth/login', (body) => body.username === 'invalid')
+    .reply(401, {});
+  nock(apiBaseURL).post('/auth/login').reply(201, mockLoginResponse);
+  // Users
+  nock(apiBaseURL).get('/users').reply(200, mockUsersResponse);
+  // Products
+  nock(apiBaseURL).get('/products').reply(200, mockProductsResponse);
+  nock(apiBaseURL).get('/products/5').reply(200, mockProduct5Response);
+  // Cart
+  nock(apiBaseURL).post('/carts').reply(201, mockCartResponse);
+  // Delete user
+  nock(apiBaseURL).delete('/users/5').reply(200, {});
+  // Negative scenario: PUT /products
+  nock(apiBaseURL).put('/products').reply(404, {});
+});
+
+test.afterEach(() => {
+  nock.cleanAll();
+  nock.enableNetConnect();
 });
 
 test.describe('FakeStore API tests', () => {
