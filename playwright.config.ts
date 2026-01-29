@@ -62,11 +62,7 @@ export default defineConfig({
         name: "fakeStoreAPI",
         testMatch: "**/specs/api/fakestore.spec.ts",
         use: {
-            ignoreHTTPSErrors: true,
-            httpCredentials: {
-                username: process.env.API_USERNAME || '',
-                password: process.env.API_PASSWORD || ''
-            }
+            ignoreHTTPSErrors: true
         }
     }
   ],
