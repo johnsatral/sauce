@@ -30,21 +30,24 @@ jobs:
   fakestore-tests:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-          cache: 'npm'
-      - run: npm ci
-      - run: |
-          mkdir -p allure-results/fakeStoreAPI
-          ALLURE_RESULTS=allure-results/fakeStoreAPI npx playwright test --project=fakeStoreAPI
-        env:
-          CI: true
-      - uses: actions/upload-artifact@v4
-        with:
-          name: fakestore-allure
-          path: allure-results/fakeStoreAPI
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    - run: npm ci
+    - run: |
+        New-Item -ItemType Directory -Force -Path "allure-results/fakeStoreAPI"
+        $env:ALLURE_RESULTS="allure-results/fakeStoreAPI"
+        npx playwright test --project=fakeStoreAPI
+      shell: pwsh
+      env:
+        CI: true
+    - uses: actions/upload-artifact@v4
+      with:
+        name: fakestore-allure
+        path: allure-results/fakeStoreAPI
+
 
   generate-allure-report:
     runs-on: ubuntu-latest
