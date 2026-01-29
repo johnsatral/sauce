@@ -28,8 +28,7 @@ jobs:
           path: allure-results/sauceDemo
 
   fakestore-tests:
-    runs-on: ubuntu-latest
-    needs: saucedemo-tests
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
