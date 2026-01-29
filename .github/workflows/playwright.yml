@@ -81,12 +81,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-
       - name: Download saucedemo allure results
         uses: actions/download-artifact@v4
         with:
           name: saucedemo-allure-results
           path: allure-results/sauceDemo
+
+      - name: Download fakestoreapi allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: fakestoreapi-allure-results
+          path: allure-results/fakeStoreAPI
+
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: Generate combined Allure report
+        run: |
+          npx allure generate allure-results/sauceDemo allure-results/fakeStoreAPI -o allure-report --clean
+
+      - name: Upload combined Allure report
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-allure-report
+          path: allure-report
   upload-playwright-report:
     runs-on: ubuntu-latest
     needs: [saucedemo-tests, fakestoreapi-tests]
@@ -97,13 +115,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: saucedemo-playwright-report
-          path: playwright-report/saucedemo
+          path: playwright-report/sauceDemo
 
       - name: Download fakestoreapi playwright report
         uses: actions/download-artifact@v4
         with:
           name: fakestoreapi-playwright-report
-          path: playwright-report/fakestoreapi
+          path: playwright-report/fakeStoreAPI
 
       - name: Upload combined playwright report
         uses: actions/upload-artifact@v4
