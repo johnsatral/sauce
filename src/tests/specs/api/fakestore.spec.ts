@@ -79,8 +79,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('FakeStore API tests', () => {
-  test('successful login test for fakestore api, using existing users', async ({ request }) => {
-    const response = await request.post(`${apiBaseURL}/auth/login`, {
+  test('successful login test for fakestore api, using existing users', async ({ page }) => {
+    const response = await page.request.post(`${apiBaseURL}/auth/login`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -94,18 +94,18 @@ test.describe('FakeStore API tests', () => {
     expect(responseBody).toHaveProperty('token');
   });
 
-  test('get users to do the login tests', async ({ request }) => {
-    const newUser = await request.get(`${apiBaseURL}/users`);
+  test('get users to do the login tests', async ({ page }) => {
+    const newUser = await page.request.get(`${apiBaseURL}/users`);
     expect(newUser.status()).toBe(200);
   });
 
-  test('get products to do the test with  products', async ({ request }) => {
-    const prods = await request.get(`${apiBaseURL}/products`);
+  test('get products to do the test with  products', async ({ page }) => {
+    const prods = await page.request.get(`${apiBaseURL}/products`);
     expect(prods.status()).toBe(200);
   });
 
-  test('get product and validate its content', async ({ request }) => {
-    const newUser = await request.get(`${apiBaseURL}/products/5`);
+  test('get product and validate its content', async ({ page }) => {
+    const newUser = await page.request.get(`${apiBaseURL}/products/5`);
     expect(newUser.status()).toBe(200);
     const newUserResponse = await newUser.json();
     expect(newUserResponse).toHaveProperty('id', 5);
@@ -118,8 +118,8 @@ test.describe('FakeStore API tests', () => {
     expect(newUserResponse).toHaveProperty('rating', { rate: 4.6, count: 400 });
   });
 
-  test('create a new cart', async ({ request }) => {
-    const newUser = await request.post(`${apiBaseURL}/carts`, {
+  test('create a new cart', async ({ page }) => {
+    const newUser = await page.request.post(`${apiBaseURL}/carts`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -135,14 +135,14 @@ test.describe('FakeStore API tests', () => {
     expect(newUserResponse).toHaveProperty('products');
   });
 
-  test('delete a user', async ({ request }) => {
-    const deleteUser = await request.delete(`${apiBaseURL}/users/5`, {});
+  test('delete a user', async ({ page }) => {
+    const deleteUser = await page.request.delete(`${apiBaseURL}/users/5`);
     expect(deleteUser.status()).toBe(200);
   });
 
   //negative scenario 1
-  test('updating a product, but forgetting to add a parameter', async ({ request }) => {
-    const updateProduct = await request.put(`${apiBaseURL}/products`, {
+  test('updating a product, but forgetting to add a parameter', async ({ page }) => {
+    const updateProduct = await page.request.put(`${apiBaseURL}/products`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -154,8 +154,8 @@ test.describe('FakeStore API tests', () => {
   });
 
   //negative scenario 2
-  test('login with invalid creds', async ({ request }) => {
-    const response = await request.post(`${apiBaseURL}/auth/login`, {
+  test('login with invalid creds', async ({ page }) => {
+    const response = await page.request.post(`${apiBaseURL}/auth/login`, {
       data: {
         username: 'invalid',
         password: 'invalid',
