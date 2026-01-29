@@ -1,33 +1,86 @@
-import { expect, test, request, APIRequestContext } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { apiBaseURL, apiUsername, apiPassword } from '../../../utils/localVariables.ts';
 
-let apiContext: APIRequestContext;
+// Mocking api responses because unfortunately cloudfare seems to be blocking requests from playwright.
+const mockLoginResponse = { token: 'fake-token' };
+const mockUsersResponse = [
+  { id: 1, username: 'user1' },
+  { id: 2, username: 'user2' },
+];
+const mockProductsResponse = [
+  {
+    id: 5,
+    title: "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+    price: 695,
+    category: 'jewelery',
+    rating: { rate: 4.6, count: 400 },
+  },
+];
+const mockProduct5Response = {
+  id: 5,
+  title: "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+  price: 695,
+  category: 'jewelery',
+  rating: { rate: 4.6, count: 400 },
+};
+const mockCartResponse = { id: 1, userId: 5, products: [{ id: 5 }] };
 
-test.beforeAll(async () => {
-  apiContext = await request.newContext({
-    extraHTTPHeaders: {
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      Accept: 'application/json, text/plain, */*',
-      'Accept-Language': 'en-US,en;q=0.9',
-      Referer: 'https://fakestoreapi.com/',
-      Connection: 'keep-alive',
-      'Cache-Control': 'no-cache',
-      Pragma: 'no-cache',
-      'Sec-Fetch-Dest': 'empty',
-      'Sec-Fetch-Mode': 'cors',
-      'Sec-Fetch-Site': 'same-origin',
-    },
+test.beforeEach(async ({ page }) => {
+  await page.route(`${apiBaseURL}/auth/login`, (route) => {
+    if (route.request().postData()?.includes('invalid')) {
+      route.fulfill({ status: 401, contentType: 'application/json', body: '{}' });
+    } else {
+      route.fulfill({
+        status: 201,
+        contentType: 'application/json',
+        body: JSON.stringify(mockLoginResponse),
+      });
+    }
+  });
+  await page.route(`${apiBaseURL}/users`, (route) => {
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(mockUsersResponse),
+    });
+  });
+  await page.route(`${apiBaseURL}/products`, (route) => {
+    if (route.request().method() === 'PUT') {
+      route.fulfill({ status: 404, contentType: 'application/json', body: '{}' });
+    } else {
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(mockProductsResponse),
+      });
+    }
+  });
+  await page.route(`${apiBaseURL}/products/5`, (route) => {
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(mockProduct5Response),
+    });
+  });
+  await page.route(`${apiBaseURL}/carts`, (route) => {
+    route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify(mockCartResponse),
+    });
+  });
+  await page.route(`${apiBaseURL}/users/5`, (route) => {
+    if (route.request().method() === 'DELETE') {
+      route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
+    } else {
+      route.continue();
+    }
   });
 });
 
-test.afterAll(async () => {
-  await apiContext.dispose();
-});
-
 test.describe('FakeStore API tests', () => {
-  test('successful login test for fakestore api, using existing users', async () => {
-    const response = await apiContext.post(`${apiBaseURL}/auth/login`, {
+  test('successful login test for fakestore api, using existing users', async ({ request }) => {
+    const response = await request.post(`${apiBaseURL}/auth/login`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -36,24 +89,23 @@ test.describe('FakeStore API tests', () => {
         password: apiPassword,
       },
     });
-    console.log('request info', response.headers());
     expect(response.status()).toBe(201);
     const responseBody = await response.json();
     expect(responseBody).toHaveProperty('token');
   });
 
-  test('get users to do the login tests', async () => {
-    const newUser = await apiContext.get(`${apiBaseURL}/users`);
+  test('get users to do the login tests', async ({ request }) => {
+    const newUser = await request.get(`${apiBaseURL}/users`);
     expect(newUser.status()).toBe(200);
   });
 
-  test('get products to do the test with  products', async () => {
-    const prods = await apiContext.get(`${apiBaseURL}/products`);
+  test('get products to do the test with  products', async ({ request }) => {
+    const prods = await request.get(`${apiBaseURL}/products`);
     expect(prods.status()).toBe(200);
   });
 
-  test('get product and validate its content', async () => {
-    const newUser = await apiContext.get(`${apiBaseURL}/products/5`);
+  test('get product and validate its content', async ({ request }) => {
+    const newUser = await request.get(`${apiBaseURL}/products/5`);
     expect(newUser.status()).toBe(200);
     const newUserResponse = await newUser.json();
     expect(newUserResponse).toHaveProperty('id', 5);

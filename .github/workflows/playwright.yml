@@ -29,18 +29,11 @@ jobs:
         env:
           CI: true
 
-      - name: install allure cli
-        run: |
-          npm install -g allure-commandline --save-dev      
-
-      - run: npx allure generate allure-results/sauceDemo -o allure-report/sauceDemo --clean
-        if: always()
-
-      - uses: actions/upload-artifact@v4
-        if: always()
+      - name: upload saucedemo allure results
+        uses: actions/upload-artifact@v4
         with:
-          name: saucedemo-allure
-          path: allure-report/sauceDemo
+          name: saucedemo-allure-results
+          path: allure-results/sauceDemo
 
   fakestoreapi-tests:
     runs-on: [self-hosted, fakestore]
@@ -64,15 +57,39 @@ jobs:
         env:
           CI: true
 
-      - name: install allure cli
-        run: |
-          npm install -g allure-commandline --save-dev      
-
-      - run: npx allure generate allure-results/fakeStoreAPI -o allure-report/fakeStoreAPI --clean
-        if: always()
-
-      - uses: actions/upload-artifact@v4
-        if: always()
+      - name: upload fakestoreapi allure results
+        uses: actions/upload-artifact@v4
         with:
-          name: fakestoreapi-allure
-          path: allure-report/fakeStoreAPI
+          name: fakestoreapi-allure-results
+          path: allure-results/fakeStoreAPI
+
+  generate-allure-report:
+    runs-on: ubuntu-latest
+    needs: [saucedemo-tests, fakestoreapi-tests]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download saucedemo allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: saucedemo-allure-results
+          path: allure-results/sauceDemo
+
+      - name: Download fakestoreapi allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: fakestoreapi-allure-results
+          path: allure-results/fakeStoreAPI
+
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: Generate combined Allure report
+        run: |
+          npx allure generate allure-results/sauceDemo allure-results/fakeStoreAPI -o allure-report --clean
+
+      - name: Upload combined Allure report
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-allure-report
+          path: allure-report
