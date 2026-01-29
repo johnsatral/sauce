@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 1
+      "actualWorkers": 4
     },
     "preserveOutput": "always",
     "projects": [
@@ -20,7 +20,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 4
         },
         "id": "sauceDemo",
         "name": "sauceDemo",
@@ -36,7 +36,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 4
         },
         "id": "fakeStoreAPI",
         "name": "fakeStoreAPI",
@@ -98,6 +98,260 @@
   },
   "suites": [
     {
+      "title": "specs\\ui\\sauceDemo.spec.ts",
+      "file": "specs/ui/sauceDemo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "SauceDemo basic tests",
+          "file": "specs/ui/sauceDemo.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "saucedemo happy flow, checkout and validate final price",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "sauceDemo",
+                  "projectName": "sauceDemo",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3729,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Wait for login page to be visible",
+                          "duration": 43
+                        },
+                        {
+                          "title": "Login with username: standard_user",
+                          "duration": 136
+                        },
+                        {
+                          "title": "Wait for inventory page to be visible",
+                          "duration": 129
+                        },
+                        {
+                          "title": "Add items to cart",
+                          "duration": 101
+                        },
+                        {
+                          "title": "Navigate to shopping cart",
+                          "duration": 69
+                        },
+                        {
+                          "title": "Wait for cart page to be visible",
+                          "duration": 99
+                        },
+                        {
+                          "title": "Proceed to checkout",
+                          "duration": 47
+                        },
+                        {
+                          "title": "Wait for checkout page to be visible",
+                          "duration": 43
+                        },
+                        {
+                          "title": "Fill in checkout information",
+                          "duration": 49
+                        },
+                        {
+                          "title": "Proceed to checkout from the checkout page",
+                          "duration": 69
+                        },
+                        {
+                          "title": "Wait for overview page to be visible",
+                          "duration": 113
+                        },
+                        {
+                          "title": "Get item total from overview page",
+                          "duration": 5
+                        },
+                        {
+                          "title": "Get total from overview page",
+                          "duration": 4
+                        },
+                        {
+                          "title": "Finish checkout from overview page",
+                          "duration": 43
+                        },
+                        {
+                          "title": "Wait for complete order page to be visible",
+                          "duration": 37
+                        },
+                        {
+                          "title": "Get order completion message",
+                          "duration": 12
+                        }
+                      ],
+                      "startTime": "2026-01-29T02:35:21.136Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImRlc2NyaXB0aW9uIjoic2F1Y2VkZW1vIGhhcHB5IGZsb3csIGNoZWNrb3V0IGFuZCB2YWxpZGF0ZSBmaW5hbCBwcmljZVxuXG4ifX0="
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0c9fb57034625a35917d-ef9cbc5db2e3a8583473",
+              "file": "specs/ui/sauceDemo.spec.ts",
+              "line": 7,
+              "column": 9
+            },
+            {
+              "title": "test sorting functionality on inventory page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "sauceDemo",
+                  "projectName": "sauceDemo",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 5631,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Ascending Sorted Items:  [\n  \u001b[32m'Test.allTheThings() T-Shirt (Red)'\u001b[39m,\n  \u001b[32m'Sauce Labs Onesie'\u001b[39m,\n  \u001b[32m'Sauce Labs Fleece Jacket'\u001b[39m,\n  \u001b[32m'Sauce Labs Bolt T-Shirt'\u001b[39m,\n  \u001b[32m'Sauce Labs Bike Light'\u001b[39m,\n  \u001b[32m'Sauce Labs Backpack'\u001b[39m\n]\n"
+                        },
+                        {
+                          "text": "Descending Sorted Items:  [\n  \u001b[32m'Test.allTheThings() T-Shirt (Red)'\u001b[39m,\n  \u001b[32m'Sauce Labs Onesie'\u001b[39m,\n  \u001b[32m'Sauce Labs Fleece Jacket'\u001b[39m,\n  \u001b[32m'Sauce Labs Bolt T-Shirt'\u001b[39m,\n  \u001b[32m'Sauce Labs Bike Light'\u001b[39m,\n  \u001b[32m'Sauce Labs Backpack'\u001b[39m\n]\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Wait for login page to be visible",
+                          "duration": 45
+                        },
+                        {
+                          "title": "Login with username: standard_user",
+                          "duration": 202
+                        },
+                        {
+                          "title": "Wait for inventory page to be visible",
+                          "duration": 193
+                        },
+                        {
+                          "title": "Get all items list from inventory page for Ascending order",
+                          "duration": 94,
+                          "steps": [
+                            {
+                              "title": "Get all items list from inventory page",
+                              "duration": 45
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Get all items list from inventory page for Descending order",
+                          "duration": 72,
+                          "steps": [
+                            {
+                              "title": "Get all items list from inventory page",
+                              "duration": 48
+                            }
+                          ]
+                        }
+                      ],
+                      "startTime": "2026-01-29T02:35:21.140Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImRlc2NyaXB0aW9uIjoidGVzdCBzb3J0aW5nIGZ1bmN0aW9uYWxpdHkgb24gaW52ZW50b3J5IHBhZ2VcblxuIn19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0c9fb57034625a35917d-338a4766364b218bada7",
+              "file": "specs/ui/sauceDemo.spec.ts",
+              "line": 55,
+              "column": 9
+            },
+            {
+              "title": "invalid login test",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "sauceDemo",
+                  "projectName": "sauceDemo",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 5629,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Wait for login page to be visible",
+                          "duration": 60
+                        },
+                        {
+                          "title": "Login with username: invalid",
+                          "duration": 140
+                        }
+                      ],
+                      "startTime": "2026-01-29T02:35:21.121Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImRlc2NyaXB0aW9uIjoiaW52YWxpZCBsb2dpbiB0ZXN0XG5cbiJ9fQ=="
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0c9fb57034625a35917d-12a78b24c0d5048d8729",
+              "file": "specs/ui/sauceDemo.spec.ts",
+              "line": 78,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "specs\\api\\fakestore.spec.ts",
       "file": "specs/api/fakestore.spec.ts",
       "column": 0,
@@ -123,19 +377,19 @@
                   "projectName": "fakeStoreAPI",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 322,
+                      "duration": 364,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "request info {\n  date: \u001b[32m'Thu, 29 Jan 2026 01:09:59 GMT'\u001b[39m,\n  \u001b[32m'content-type'\u001b[39m: \u001b[32m'application/json; charset=utf-8'\u001b[39m,\n  \u001b[32m'content-length'\u001b[39m: \u001b[32m'148'\u001b[39m,\n  connection: \u001b[32m'keep-alive'\u001b[39m,\n  \u001b[32m'access-control-allow-origin'\u001b[39m: \u001b[32m'*'\u001b[39m,\n  etag: \u001b[32m'W/\"94-jSsYa0xe2+Y7ru7XS62LWjRtXcw\"'\u001b[39m,\n  \u001b[32m'x-powered-by'\u001b[39m: \u001b[32m'Express'\u001b[39m,\n  \u001b[32m'cf-cache-status'\u001b[39m: \u001b[32m'DYNAMIC'\u001b[39m,\n  nel: \u001b[32m'{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}'\u001b[39m,\n  \u001b[32m'report-to'\u001b[39m: \u001b[32m'{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=7bNwBA3dJDVAnlLvM4p1hs0S6IGsIL7V3Fgw3qvXPgO60Gxgx%2FnAxTpdnhQLR4cItZb8GYukqAIgPr3X6ukNw6yRdboK5xO1RuLQNQYc3Ns%3D\"}]}'\u001b[39m,\n  server: \u001b[32m'cloudflare'\u001b[39m,\n  \u001b[32m'cf-ray'\u001b[39m: \u001b[32m'9c54d8e6d9690c49-AMS'\u001b[39m,\n  \u001b[32m'alt-svc'\u001b[39m: \u001b[32m'h3=\":443\"; ma=86400'\u001b[39m\n}\n"
+                          "text": "request info {\n  date: \u001b[32m'Thu, 29 Jan 2026 02:35:21 GMT'\u001b[39m,\n  \u001b[32m'content-type'\u001b[39m: \u001b[32m'application/json; charset=utf-8'\u001b[39m,\n  \u001b[32m'content-length'\u001b[39m: \u001b[32m'148'\u001b[39m,\n  connection: \u001b[32m'keep-alive'\u001b[39m,\n  \u001b[32m'access-control-allow-origin'\u001b[39m: \u001b[32m'*'\u001b[39m,\n  etag: \u001b[32m'W/\"94-exAO5UZrfjA+/0fzaj4JqScmCPI\"'\u001b[39m,\n  \u001b[32m'x-powered-by'\u001b[39m: \u001b[32m'Express'\u001b[39m,\n  \u001b[32m'cf-cache-status'\u001b[39m: \u001b[32m'DYNAMIC'\u001b[39m,\n  nel: \u001b[32m'{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}'\u001b[39m,\n  \u001b[32m'report-to'\u001b[39m: \u001b[32m'{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=OuDTvJ%2BDiZHkOg75DXZXVdh8PyT6G1GyAj6CQu0RNijwTsUUWAh%2FSaXDleCotkTDLZWNlXRzj9hMrnfwUQkYdgKHhnelMDibLxcYsoGq8EU%3D\"}]}'\u001b[39m,\n  server: \u001b[32m'cloudflare'\u001b[39m,\n  \u001b[32m'cf-ray'\u001b[39m: \u001b[32m'9c5555f498746608-AMS'\u001b[39m,\n  \u001b[32m'alt-svc'\u001b[39m: \u001b[32m'h3=\":443\"; ma=86400'\u001b[39m\n}\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-01-29T01:09:58.730Z",
+                      "startTime": "2026-01-29T02:35:21.096Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -147,6 +401,244 @@
               "file": "specs/api/fakestore.spec.ts",
               "line": 5,
               "column": 7
+            },
+            {
+              "title": "get users to do the login tests",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fakeStoreAPI",
+                  "projectName": "fakeStoreAPI",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 261,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T02:35:21.501Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1fa2d918da8466714783-f032f5e18b67eaeefffa",
+              "file": "specs/api/fakestore.spec.ts",
+              "line": 21,
+              "column": 7
+            },
+            {
+              "title": "get products to do the test with  products",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fakeStoreAPI",
+                  "projectName": "fakeStoreAPI",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 50,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T02:35:21.789Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1fa2d918da8466714783-f002f91ccaf0ce4e0990",
+              "file": "specs/api/fakestore.spec.ts",
+              "line": 30,
+              "column": 7
+            },
+            {
+              "title": "get product and validate its content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fakeStoreAPI",
+                  "projectName": "fakeStoreAPI",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 50,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T02:35:21.856Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1fa2d918da8466714783-2b1c31af57ff77b78425",
+              "file": "specs/api/fakestore.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "create a new cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fakeStoreAPI",
+                  "projectName": "fakeStoreAPI",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 57,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T02:35:21.924Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1fa2d918da8466714783-aaaf8bc8729ab88b6e4c",
+              "file": "specs/api/fakestore.spec.ts",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "delete a user",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fakeStoreAPI",
+                  "projectName": "fakeStoreAPI",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 161,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T02:35:22.008Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1fa2d918da8466714783-1d14b67df26f0b5bc8f1",
+              "file": "specs/api/fakestore.spec.ts",
+              "line": 66,
+              "column": 7
+            },
+            {
+              "title": "updating a product, but forgetting to add a parameter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fakeStoreAPI",
+                  "projectName": "fakeStoreAPI",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 56,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T02:35:22.236Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1fa2d918da8466714783-f3222e5d3f050bc6fc09",
+              "file": "specs/api/fakestore.spec.ts",
+              "line": 72,
+              "column": 7
+            },
+            {
+              "title": "login with invalid creds",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fakeStoreAPI",
+                  "projectName": "fakeStoreAPI",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 194,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T02:35:22.326Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1fa2d918da8466714783-37121987c033c80fa515",
+              "file": "specs/api/fakestore.spec.ts",
+              "line": 85,
+              "column": 7
             }
           ]
         }
@@ -155,9 +647,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-01-29T01:09:55.621Z",
-    "duration": 3551.3390000001527,
-    "expected": 1,
+    "startTime": "2026-01-29T02:35:17.401Z",
+    "duration": 10856.983000000007,
+    "expected": 11,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

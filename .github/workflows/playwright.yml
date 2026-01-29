@@ -2,8 +2,9 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main, develop]
   pull_request:
+    branches: [main, develop]
 
 jobs:
   saucedemo-tests:
@@ -15,90 +16,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
-          cache: 'npm'
+          cache: npm
 
       - run: npm ci
+
+      - run: npx playwright install --with-deps
 
       - run: |
           mkdir -p allure-results/sauceDemo
           ALLURE_RESULTS=allure-results/sauceDemo \
-          npx playwright test --project=sauceDemo --reporter=line
+          npx playwright test --project=sauceDemo
         env:
           CI: true
-          BASE_URL: https://www.saucedemo.com/
+
+      - run: npx allure generate allure-results/sauceDemo -o allure-report/sauceDemo --clean
+        if: always()
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: saucedemo-allure
-          path: allure-results/sauceDemo
-
-
-  fakestore-tests:
-    runs-on: ubuntu-latest
-
-    services:
-      fakestore:
-        image: ghcr.io/kevinisbeard/fake-store-api:latest
-        ports:
-          - 3000:3000
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-          cache: 'npm'
-
-      - run: npm ci
-
-      - run: |
-          for i in {1..30}; do
-            if curl -s http://localhost:3000/products > /dev/null; then
-              exit 0
-            fi
-            sleep 2
-          done
-          exit 1
-
-      - run: |
-          mkdir -p allure-results/fakeStoreAPI
-          DEBUG=pw:api \
-          ALLURE_RESULTS=allure-results/fakeStoreAPI \
-          npx playwright test --project=fakeStoreAPI --reporter=line
-        env:
-          CI: true
-          API_BASE_URL: http://127.0.0.1:3000
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: fakestore-allure
-          path: allure-results/fakeStoreAPI
-
-
-  generate-allure-report:
-    runs-on: ubuntu-latest
-    needs: [saucedemo-tests, fakestore-tests]
-    if: always()
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - run: |
-          mkdir -p allure-results
-          cp -r artifacts/saucedemo-allure/* allure-results/ || true
-          cp -r artifacts/fakestore-allure/* allure-results/ || true
-
-      - run: |
-          npx allure generate allure-results --clean -o allure-report
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: allure-report
-          path: allure-report
+          path: allure-report/sauceDemo

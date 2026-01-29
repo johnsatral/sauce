@@ -1,24 +1,65 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="3.551339000000153">
-<testsuite name="specs\api\fakestore.spec.ts" timestamp="2026-01-29T01:09:57.185Z" hostname="fakeStoreAPI" tests="1" failures="0" skipped="0" time="0.322" errors="0">
-<testcase name="FakeStore API tests › successful login test for fakestore api, using existing users" classname="specs\api\fakestore.spec.ts" time="0.322">
+<testsuites id="" name="" tests="11" failures="0" skipped="0" errors="0" time="10.856983000000007">
+<testsuite name="specs\ui\sauceDemo.spec.ts" timestamp="2026-01-29T02:35:19.154Z" hostname="sauceDemo" tests="3" failures="0" skipped="0" time="14.989" errors="0">
+<testcase name="SauceDemo basic tests › saucedemo happy flow, checkout and validate final price" classname="specs\ui\sauceDemo.spec.ts" time="3.729">
+</testcase>
+<testcase name="SauceDemo basic tests › test sorting functionality on inventory page" classname="specs\ui\sauceDemo.spec.ts" time="5.631">
+<system-out>
+<![CDATA[Ascending Sorted Items:  [
+  [32m'Test.allTheThings() T-Shirt (Red)'[39m,
+  [32m'Sauce Labs Onesie'[39m,
+  [32m'Sauce Labs Fleece Jacket'[39m,
+  [32m'Sauce Labs Bolt T-Shirt'[39m,
+  [32m'Sauce Labs Bike Light'[39m,
+  [32m'Sauce Labs Backpack'[39m
+]
+Descending Sorted Items:  [
+  [32m'Test.allTheThings() T-Shirt (Red)'[39m,
+  [32m'Sauce Labs Onesie'[39m,
+  [32m'Sauce Labs Fleece Jacket'[39m,
+  [32m'Sauce Labs Bolt T-Shirt'[39m,
+  [32m'Sauce Labs Bike Light'[39m,
+  [32m'Sauce Labs Backpack'[39m
+]
+]]>
+</system-out>
+</testcase>
+<testcase name="SauceDemo basic tests › invalid login test" classname="specs\ui\sauceDemo.spec.ts" time="5.629">
+</testcase>
+</testsuite>
+<testsuite name="specs\api\fakestore.spec.ts" timestamp="2026-01-29T02:35:19.154Z" hostname="fakeStoreAPI" tests="8" failures="0" skipped="0" time="1.193" errors="0">
+<testcase name="FakeStore API tests › successful login test for fakestore api, using existing users" classname="specs\api\fakestore.spec.ts" time="0.364">
 <system-out>
 <![CDATA[request info {
-  date: [32m'Thu, 29 Jan 2026 01:09:59 GMT'[39m,
+  date: [32m'Thu, 29 Jan 2026 02:35:21 GMT'[39m,
   [32m'content-type'[39m: [32m'application/json; charset=utf-8'[39m,
   [32m'content-length'[39m: [32m'148'[39m,
   connection: [32m'keep-alive'[39m,
   [32m'access-control-allow-origin'[39m: [32m'*'[39m,
-  etag: [32m'W/"94-jSsYa0xe2+Y7ru7XS62LWjRtXcw"'[39m,
+  etag: [32m'W/"94-exAO5UZrfjA+/0fzaj4JqScmCPI"'[39m,
   [32m'x-powered-by'[39m: [32m'Express'[39m,
   [32m'cf-cache-status'[39m: [32m'DYNAMIC'[39m,
   nel: [32m'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'[39m,
-  [32m'report-to'[39m: [32m'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=7bNwBA3dJDVAnlLvM4p1hs0S6IGsIL7V3Fgw3qvXPgO60Gxgx%2FnAxTpdnhQLR4cItZb8GYukqAIgPr3X6ukNw6yRdboK5xO1RuLQNQYc3Ns%3D"}]}'[39m,
+  [32m'report-to'[39m: [32m'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=OuDTvJ%2BDiZHkOg75DXZXVdh8PyT6G1GyAj6CQu0RNijwTsUUWAh%2FSaXDleCotkTDLZWNlXRzj9hMrnfwUQkYdgKHhnelMDibLxcYsoGq8EU%3D"}]}'[39m,
   server: [32m'cloudflare'[39m,
-  [32m'cf-ray'[39m: [32m'9c54d8e6d9690c49-AMS'[39m,
+  [32m'cf-ray'[39m: [32m'9c5555f498746608-AMS'[39m,
   [32m'alt-svc'[39m: [32m'h3=":443"; ma=86400'[39m
 }
 ]]>
 </system-out>
+</testcase>
+<testcase name="FakeStore API tests › get users to do the login tests" classname="specs\api\fakestore.spec.ts" time="0.261">
+</testcase>
+<testcase name="FakeStore API tests › get products to do the test with  products" classname="specs\api\fakestore.spec.ts" time="0.05">
+</testcase>
+<testcase name="FakeStore API tests › get product and validate its content" classname="specs\api\fakestore.spec.ts" time="0.05">
+</testcase>
+<testcase name="FakeStore API tests › create a new cart" classname="specs\api\fakestore.spec.ts" time="0.057">
+</testcase>
+<testcase name="FakeStore API tests › delete a user" classname="specs\api\fakestore.spec.ts" time="0.161">
+</testcase>
+<testcase name="FakeStore API tests › updating a product, but forgetting to add a parameter" classname="specs\api\fakestore.spec.ts" time="0.056">
+</testcase>
+<testcase name="FakeStore API tests › login with invalid creds" classname="specs\api\fakestore.spec.ts" time="0.194">
 </testcase>
 </testsuite>
 </testsuites>
