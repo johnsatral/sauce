@@ -5,7 +5,6 @@ test.describe('FakeStore API tests', () => {
   test('successful login test for fakestore api, using existing users', async ({ request }) => {
     const response = await request.post(`${apiBaseURL}/auth/login`, {
       headers: {
-        Origin: apiBaseURL,
         'Content-Type': 'application/json',
       },
       data: {
@@ -13,6 +12,7 @@ test.describe('FakeStore API tests', () => {
         password: apiPassword,
       },
     });
+    console.log('request info', response.headers());
     expect(response.status()).toBe(201);
     const responseBody = await response.json();
     expect(responseBody).toHaveProperty('token');
