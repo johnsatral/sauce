@@ -22,9 +22,7 @@ jobs:
 
       - run: npx playwright install --with-deps
 
-      - run: |
-          mkdir -p allure-results/sauceDemo
-          ALLURE_RESULTS=allure-results/sauceDemo \
+        - run: |
           npx playwright test --project=sauceDemo
         env:
           CI: true
@@ -56,9 +54,7 @@ jobs:
 
       - run: npx playwright install --with-deps
 
-      - run: |
-          mkdir -p allure-results/fakeStoreAPI
-          ALLURE_RESULTS=allure-results/fakeStoreAPI \
+        - run: |
           npx playwright test --project=fakeStoreAPI
         env:
           CI: true
