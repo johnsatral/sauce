@@ -26,25 +26,9 @@ export default defineConfig({
     ['json', { outputFile: 'test-results/results.json' }],
     ['junit', { outputFile: 'test-results/junit.xml' }],
     ['list'],
-    // Dynamically set Allure outputFolder per project
-    [
-      'allure-playwright',
-      /**
-       * Custom function to set outputFolder per project
-       * @param config Playwright config
-       * @param projectName Name of the project
-       */
-      (() => {
-        // Use process.env.PW_PROJECT_NAME if available (set by Playwright for each project)
-        const project = process.env.PW_PROJECT_NAME;
-        if (project === 'sauceDemo') {
-          return { outputFolder: 'allure-results/sauceDemo' };
-        } else if (project === 'fakeStoreAPI') {
-          return { outputFolder: 'allure-results/fakeStoreAPI' };
-        }
-        return { outputFolder: 'allure-results' };
-      })()
-    ],
+    ['allure-playwright', {
+      outputFolder: process.env.ALLURE_RESULTS || 'allure-results'
+    }],
     ['blob', { outputFolder: process.env.BLOB_REPORT || 'blob-report' }]
   ],
   globalSetup: "./src/utils/global-setup.ts",

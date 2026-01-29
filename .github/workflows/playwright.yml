@@ -9,30 +9,18 @@ on:
 jobs:
   saucedemo-tests:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
           cache: npm
-
       - run: npm ci
-
       - run: npx playwright install --with-deps
-
-        - run: |
+      - run: |
           npx playwright test --project=sauceDemo
         env:
           CI: true
-
-      - name: upload saucedemo allure results
-        uses: actions/upload-artifact@v4
-        with:
-          name: saucedemo-allure-results
-          path: allure-results/sauceDemo
-
       - name: upload saucedemo playwright report
         uses: actions/upload-artifact@v4
         with:
@@ -41,66 +29,24 @@ jobs:
 
   fakestoreapi-tests:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
           cache: npm
-
       - run: npm ci
-
       - run: npx playwright install --with-deps
-
-        - run: |
+      - run: |
           npx playwright test --project=fakeStoreAPI
         env:
           CI: true
-
-      - name: upload fakestoreapi allure results
-        uses: actions/upload-artifact@v4
-        with:
-          name: fakestoreapi-allure-results
-          path: allure-results/fakeStoreAPI
-
       - name: upload fakestoreapi playwright report
         uses: actions/upload-artifact@v4
         with:
           name: fakestoreapi-playwright-report
           path: playwright-report
 
-  generate-allure-report:
-    runs-on: ubuntu-latest
-    needs: [saucedemo-tests, fakestoreapi-tests]
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download saucedemo allure results
-        uses: actions/download-artifact@v4
-        with:
-          name: saucedemo-allure-results
-          path: allure-results/sauceDemo
-
-      - name: Download fakestoreapi allure results
-        uses: actions/download-artifact@v4
-        with:
-          name: fakestoreapi-allure-results
-          path: allure-results/fakeStoreAPI
-
-      - name: Install Allure CLI
-        run: npm install -g allure-commandline
-
-      - name: Generate combined Allure report
-        run: |
-          npx allure generate allure-results/sauceDemo allure-results/fakeStoreAPI -o allure-report --clean
-
-      - name: Upload combined Allure report
-        uses: actions/upload-artifact@v4
-        with:
-          name: combined-allure-report
-          path: allure-report
   upload-playwright-report:
     runs-on: ubuntu-latest
     needs: [saucedemo-tests, fakestoreapi-tests]
