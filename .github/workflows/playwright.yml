@@ -8,7 +8,7 @@ on:
 
 jobs:
   run-tests:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     services:
       mongo:
         image: mongo:6
