@@ -1,9 +1,5 @@
 node_modules/
 dist/
-test-results/
-blob-report/
-allure-results/
-allure-report/
 playwright/.cache/
 .DS_Store
 *.log
@@ -14,4 +10,3 @@ playwright/.cache/
 *.swo
 coverage/
 .husky/_
-playwright-report

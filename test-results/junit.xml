@@ -1,0 +1,24 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="3.551339000000153">
+<testsuite name="specs\api\fakestore.spec.ts" timestamp="2026-01-29T01:09:57.185Z" hostname="fakeStoreAPI" tests="1" failures="0" skipped="0" time="0.322" errors="0">
+<testcase name="FakeStore API tests › successful login test for fakestore api, using existing users" classname="specs\api\fakestore.spec.ts" time="0.322">
+<system-out>
+<![CDATA[request info {
+  date: [32m'Thu, 29 Jan 2026 01:09:59 GMT'[39m,
+  [32m'content-type'[39m: [32m'application/json; charset=utf-8'[39m,
+  [32m'content-length'[39m: [32m'148'[39m,
+  connection: [32m'keep-alive'[39m,
+  [32m'access-control-allow-origin'[39m: [32m'*'[39m,
+  etag: [32m'W/"94-jSsYa0xe2+Y7ru7XS62LWjRtXcw"'[39m,
+  [32m'x-powered-by'[39m: [32m'Express'[39m,
+  [32m'cf-cache-status'[39m: [32m'DYNAMIC'[39m,
+  nel: [32m'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'[39m,
+  [32m'report-to'[39m: [32m'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=7bNwBA3dJDVAnlLvM4p1hs0S6IGsIL7V3Fgw3qvXPgO60Gxgx%2FnAxTpdnhQLR4cItZb8GYukqAIgPr3X6ukNw6yRdboK5xO1RuLQNQYc3Ns%3D"}]}'[39m,
+  server: [32m'cloudflare'[39m,
+  [32m'cf-ray'[39m: [32m'9c54d8e6d9690c49-AMS'[39m,
+  [32m'alt-svc'[39m: [32m'h3=":443"; ma=86400'[39m
+}
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

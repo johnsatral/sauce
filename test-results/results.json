@@ -1,0 +1,165 @@
+{
+  "config": {
+    "configFile": "C:\\spriteCloud\\playwright.config.ts",
+    "rootDir": "C:/spriteCloud/src/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "C:\\spriteCloud\\src\\utils\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/spriteCloud/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "sauceDemo",
+        "name": "sauceDemo",
+        "testDir": "C:/spriteCloud/src/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/specs/ui/sauceDemo.spec.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/spriteCloud/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "fakeStoreAPI",
+        "name": "fakeStoreAPI",
+        "testDir": "C:/spriteCloud/src/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/specs/api/fakestore.spec.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/junit.xml"
+        }
+      ],
+      [
+        "list",
+        null
+      ],
+      [
+        "C:\\spriteCloud\\node_modules\\allure-playwright\\dist\\cjs\\index.js",
+        {
+          "outputFolder": "allure-results"
+        }
+      ],
+      [
+        "blob",
+        {
+          "outputFolder": "blob-report"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "runAgents": "none",
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "3way",
+    "version": "1.58.0",
+    "workers": 6,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "specs\\api\\fakestore.spec.ts",
+      "file": "specs/api/fakestore.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "FakeStore API tests",
+          "file": "specs/api/fakestore.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "successful login test for fakestore api, using existing users",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "fakeStoreAPI",
+                  "projectName": "fakeStoreAPI",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 322,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "request info {\n  date: \u001b[32m'Thu, 29 Jan 2026 01:09:59 GMT'\u001b[39m,\n  \u001b[32m'content-type'\u001b[39m: \u001b[32m'application/json; charset=utf-8'\u001b[39m,\n  \u001b[32m'content-length'\u001b[39m: \u001b[32m'148'\u001b[39m,\n  connection: \u001b[32m'keep-alive'\u001b[39m,\n  \u001b[32m'access-control-allow-origin'\u001b[39m: \u001b[32m'*'\u001b[39m,\n  etag: \u001b[32m'W/\"94-jSsYa0xe2+Y7ru7XS62LWjRtXcw\"'\u001b[39m,\n  \u001b[32m'x-powered-by'\u001b[39m: \u001b[32m'Express'\u001b[39m,\n  \u001b[32m'cf-cache-status'\u001b[39m: \u001b[32m'DYNAMIC'\u001b[39m,\n  nel: \u001b[32m'{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}'\u001b[39m,\n  \u001b[32m'report-to'\u001b[39m: \u001b[32m'{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=7bNwBA3dJDVAnlLvM4p1hs0S6IGsIL7V3Fgw3qvXPgO60Gxgx%2FnAxTpdnhQLR4cItZb8GYukqAIgPr3X6ukNw6yRdboK5xO1RuLQNQYc3Ns%3D\"}]}'\u001b[39m,\n  server: \u001b[32m'cloudflare'\u001b[39m,\n  \u001b[32m'cf-ray'\u001b[39m: \u001b[32m'9c54d8e6d9690c49-AMS'\u001b[39m,\n  \u001b[32m'alt-svc'\u001b[39m: \u001b[32m'h3=\":443\"; ma=86400'\u001b[39m\n}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T01:09:58.730Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1fa2d918da8466714783-bced8c674ad3e6643dab",
+              "file": "specs/api/fakestore.spec.ts",
+              "line": 5,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-01-29T01:09:55.621Z",
+    "duration": 3551.3390000001527,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
